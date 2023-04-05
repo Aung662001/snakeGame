@@ -34,10 +34,38 @@
         background-color: hsl(50, 100%, 50%);
         border: 0.25vmin solid black;
       }
+      #restart {
+        position: absolute;
+        width: 400px;
+        height: 300px;
+        font-size: 3rem;
+        border-radius: 10px;
+        display: none;
+      }
+      #restart:hover {
+        scale: 1.01;
+      }
     </style>
   </head>
   <body>
-    <div id="game-board"></div>
+    <div class="container">
+      <div id="game-board"></div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          justify-content: center;
+          align-items: center;
+          gap: 4px;
+        "
+      >
+        <button id="up">+</button>
+        <p style="color: aliceblue" id="speed">Speed 5</p>
+        <button id="down">-</button>
+      </div>
+    </div>
+    <button id="restart">Restart</button>
     <script src="main.js" defer type="module"></script>
   </body>
 </html>

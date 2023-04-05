@@ -1,13 +1,31 @@
-import { SNAKE_SPEED, updateSnake, drawSnake } from "./snake.js";
+import {
+  SNAKE_SPEED,
+  updateSnake,
+  drawSnake,
+  getHead,
+  snakeIntersection,
+} from "./snake.js";
+import { outsideGrid } from "./area.js";
+import { draw as drawFood, update as updateFood } from "./food.js";
+let restartBtn = document.getElementById("restart");
 let gameboard = document.getElementById("game-board");
+
 let lastRenderTime = 0;
+let lose = false;
 
 function main(currentTime) {
+  if (lose) {
+    restartBtn.style.display = "block";
+    restartBtn.addEventListener("click", () => {
+      location.reload();
+      restartBtn.style.display = "none";
+    });
+    return;
+  }
   window.requestAnimationFrame(main);
   const secondSinceLastRender = (currentTime - lastRenderTime) / 1000;
   if (secondSinceLastRender < 1 / SNAKE_SPEED) return;
   lastRenderTime = currentTime;
-  console.log("render");
 
   update();
   draw();
@@ -16,8 +34,15 @@ window.requestAnimationFrame(main);
 
 function update() {
   updateSnake(gameboard);
+  updateFood();
+  checkDeath();
 }
 function draw() {
   gameboard.innerHTML = "";
   drawSnake(gameboard);
+  drawFood(gameboard);
+}
+
+function checkDeath() {
+  lose = outsideGrid(getHead()) || snakeIntersection();
 }
