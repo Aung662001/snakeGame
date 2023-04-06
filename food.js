@@ -1,15 +1,17 @@
 import { onSnake, expandSnake } from "./snake.js";
 const min = 1;
 const max = 21;
+let randomNumX = Math.floor(Math.random() * max) + min;
+let randomNumY = Math.floor(Math.random() * max) + min;
 
-let food = { x: 10, y: 1 };
+let food = { x: randomNumX, y: randomNumY };
 let EXPAND_RATE_OF_SNAKE = 1;
 
 export function update() {
   if (onSnake(food)) {
     expandSnake(EXPAND_RATE_OF_SNAKE);
-    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-    food = { x: randomNum, y: randomNum };
+    randomNumCaller();
+    food = { x: randomNumX, y: randomNumY };
   }
 }
 
@@ -19,4 +21,9 @@ export function draw(gameboard) {
   foodElement.style.gridColumnStart = food.x;
   foodElement.classList.add("food");
   gameboard.appendChild(foodElement);
+}
+
+function randomNumCaller() {
+  randomNumX = Math.floor(Math.random() * (max - min + 1)) + min;
+  randomNumY = Math.floor(Math.random() * max) + min;
 }
